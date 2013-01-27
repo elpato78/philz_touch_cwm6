@@ -86,7 +86,8 @@ int device_wipe_data();
 #define ITEM_PARTITION       5
 #define ITEM_ADVANCED        6
 #define ITEM_PHILZ_MENU      7
-#define ITEM_POWEROFF        8
+#define ITEM_JEBOO_TWEAKS    8
+#define ITEM_POWEROFF        9
 
 // Header text to display above the main menu.
 extern char* MENU_HEADERS[];

@@ -2649,6 +2649,68 @@ void show_philz_settings()
 /***************************************************/
 /*      End PhilZ Menu settings and functions      */
 /***************************************************/
+void show_mdnie_menu()
+{
+    char tmp[PATH_MAX], fname[PATH_MAX];
+    int  i;
+    static char* headers[] = {  "MDNIE Sharpness Fix",
+                                "",
+                                NULL
+    };
+
+    static char* list[] = { "ENABLE MDNIE Sharpness Fix",
+                    "DISABLE MDNIE Sharpness Fix",
+                    NULL
+    };
+
+    for (;;) 
+    {
+        //header function so that "Toggle menu" doesn't reset to main menu on action selected
+        int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
+        if (chosen_item == GO_BACK)
+            break;
+	
+	if (0 != ensure_path_mounted("/data"))
+            break;
+
+        switch (chosen_item)
+        {
+	    case 0:
+	    case 1:
+	    	sprintf(tmp, "mkdir /data/.jeboo;rm -f /data/.jeboo/mdnie_tweak; echo \"%u\" > /data/.jeboo/mdnie_tweak", (~chosen_item)+2);
+	    	__system(tmp);
+		break;
+        }
+
+	ensure_path_unmounted("/data");
+
+	ui_print("MDNIE Sharpness Fix %s.\n", chosen_item ? "DISABLED" : "ENABLED");
+    }
+}
+
+void show_jeboo_tweaks()
+{
+    static char* headers[] = {  "Jeboo Kernel Tweaks",
+                                NULL
+    };
+
+    static char* list[] = { "MDNIE Sharpness Fix",
+                             NULL
+    };
+
+    for (;;) {
+        //header function so that "Toggle menu" doesn't reset to main menu on action selected
+        int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
+        if (chosen_item == GO_BACK)
+            break;
+        switch (chosen_item)
+        {
+            case 0:
+                show_mdnie_menu();
+		break;
+        }
+    }
+}
 
 void write_fstab_root(char *path, FILE *file)
 {

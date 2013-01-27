@@ -30,6 +30,7 @@ char* MENU_ITEMS[] = { "Reboot System Now",
                        "Mounts and Storage",
                        "Advanced",
                        "PhilZ Settings",
+		       "Jeboo Kernel Tweaks",
                        "Power Off",
                        NULL };
 

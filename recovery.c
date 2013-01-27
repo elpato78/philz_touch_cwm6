@@ -754,6 +754,10 @@ prompt_and_wait() {
                 show_philz_settings();
                 break;
 
+	    case ITEM_JEBOO_TWEAKS:
+		show_jeboo_tweaks();
+		break;
+
             case ITEM_POWEROFF:
                 poweroff = 1;
                 return;
