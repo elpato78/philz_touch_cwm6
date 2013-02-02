@@ -2688,6 +2688,43 @@ void show_mdnie_menu()
     }
 }
 
+void show_vctrl_menu()
+{
+    char tmp[PATH_MAX], fname[PATH_MAX];
+    int  i;
+    static char* headers[] = {  "Clear init.d Voltage Script",
+                                "",
+                                NULL
+    };
+
+    static char* list[] = { "Delete /etc/init.d/S91voltctrl voltage script",
+	                    NULL
+    };
+
+    for (;;) 
+    {
+        //header function so that "Toggle menu" doesn't reset to main menu on action selected
+        int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
+        if (chosen_item == GO_BACK)
+            break;
+	
+	if (0 != ensure_path_mounted("/system"))
+            break;
+
+        switch (chosen_item)
+        {
+	    case 0:
+	    	sprintf(tmp, "rm -f /system/etc/init.d/S91voltctrl");
+	    	__system(tmp);
+		break;
+        }
+
+	ensure_path_unmounted("/system");
+
+	ui_print("Removed /etc/init.d/S91voltctrl\n");
+    }
+}
+
 void show_jeboo_tweaks()
 {
     static char* headers[] = {  "Jeboo Kernel Tweaks",
@@ -2695,7 +2732,8 @@ void show_jeboo_tweaks()
     };
 
     static char* list[] = { "MDNIE Sharpness Fix",
-                             NULL
+                            "Clear init.d Voltage Script",
+			    NULL
     };
 
     for (;;) {
@@ -2707,6 +2745,9 @@ void show_jeboo_tweaks()
         {
             case 0:
                 show_mdnie_menu();
+		break;
+	    case 1:
+		show_vctrl_menu();
 		break;
         }
     }
